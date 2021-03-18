@@ -2,9 +2,9 @@ import paho.mqtt.client as mqtt
 
 class UserInfo:
     def __init__(self, name, temp, status):
-    self.name = name
-    self.temp = temp
-    self.status = status
+        self.name = name
+        self.temp = temp
+        self.status = status
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -12,21 +12,21 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("$SYS/#")
+    client.subscribe([("Family Members", 0), ("Preferred Temp", 0)])
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
 
 #Add new user profile from the management app
-def add_new_user(dicts, userName, preferredTemp)
+def add_new_user(dicts, userName, preferredTemp):
     if userName in dicts:
         print("Name is already in use. Please pick a different name")
     else:
         dicts[userName] = UserInfo(userName, preferredTemp, 0)
 
 #Update new desired temperature for everyone in the house at the moment
-def update_new_temp(dicts)
+def update_new_temp(dicts):
     sum = 0
     count = 0;
     for key in dicts:
@@ -37,10 +37,10 @@ def update_new_temp(dicts)
     return sum/count
 
 #Update new user status to check if they are inside the house
-def update_user_status(dicts, userName, status)
+def update_user_status(dicts, userName, status):
     if userName in dicts:
         dicts[userName].status = status
-    else
+    else:
         print("Unknown user. Can't update his/her status")
     
 def main():
