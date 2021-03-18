@@ -12,7 +12,7 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe([("Family Members", 0), ("Preferred Temp", 0)])
+    client.subscribe([("Family/Members", 0), ("Preferred/Temp", 0)])
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -47,7 +47,7 @@ def main():
     #Create and connect the MQTT client to the broker server
     client = mqtt.Client()
     client.on_connect = on_connect
-    #client.on_message = on_message
+    client.on_message = on_message
     
     client.connect("test.mosquitto.org", 1883, 60)
 
