@@ -12,7 +12,7 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe([("Family/Members", 0), ("Preferred/Temp", 0)])
+    client.subscribe([("Management/App", 0), ("Smart/Locker", 0)])
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
