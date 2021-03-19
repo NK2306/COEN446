@@ -19,9 +19,13 @@ def on_message(client, userdata, msg):
     temp = msg.payload.decode("utf-8").split(",")
     
     if msg.topic == "Management/App" :
+        print("New user info received. New user name: " + temp[0] + ", temp: " + temp[1])
         add_new_user(my_dict, temp[0], int(temp[1]))
-        print(msg.topic+" "+temp[0])
-       # print(type(msg.payload))
+        
+    elif msg.topic == "Smart/Locker" :
+        print("Updating the house's temp")
+        update_user_status(my_dict, temp[0], int(temp[1]))
+        update_new_temp(my_dict)
 
 #Add new user profile from the management app
 def add_new_user(dicts, userName, preferredTemp):
@@ -34,12 +38,16 @@ def add_new_user(dicts, userName, preferredTemp):
 def update_new_temp(dicts):
     sum = 0
     count = 0;
+        
     for key in dicts:
         if(dicts[key].status == 1):
             sum = sum + dicts[key].temp
             count = count + 1
-    
-    return sum/count
+
+    if count == 0:
+        print("The temperature is now set to: 25 (default)")
+    else:
+        print("The temperature is now set to: " + str(round(sum/count, 1)))
 
 #Update new user status to check if they are inside the house
 def update_user_status(dicts, userName, status):
@@ -49,7 +57,10 @@ def update_user_status(dicts, userName, status):
         print("Unknown user. Can't update his/her status")
     
 def main():
+    global my_dict
     my_dict = {}
+
+    update_new_temp(my_dict)
     
     #Create and connect the MQTT client to the broker server
     client = mqtt.Client()

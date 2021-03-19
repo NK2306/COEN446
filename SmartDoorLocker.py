@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 
 mqttc = mqtt.Client()
-mqttc.connect("test.mosquitto.org", 1883, 60)
+mqttc.connect("localhost", 1883, 60)
 
 while True:
     print("Leaving or entering? (1 for entering, 0 for leaving)")
@@ -12,4 +12,4 @@ while True:
     name = input()
     print("Name entered:", name)
 
-    mqttc.publish("Smart/Locker", index+name, qos=0, retain=False)
+    mqttc.publish("Smart/Locker", name + ',' + index, qos=0, retain=False)
