@@ -12,4 +12,4 @@ while True:
     temp = input()
     print("Temperature entered:", temp)
 
-    mqttc.publish("Management/App", name+temp, qos=0, retain=False)
+    mqttc.publish("Management/App", name + ',' + temp, qos=0, retain=False)
