@@ -16,8 +16,10 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
+    temp = msg.payload.decode("utf-8").split(",")
+    
     if msg.topic == "Management/App" :
-        temp = msg.payload.decode("utf-8").split(",") 
+        add_new_user(my_dict, temp[0], int(temp[1]))
         print(msg.topic+" "+temp[0])
        # print(type(msg.payload))
 
@@ -47,6 +49,8 @@ def update_user_status(dicts, userName, status):
         print("Unknown user. Can't update his/her status")
     
 def main():
+    my_dict = {}
+    
     #Create and connect the MQTT client to the broker server
     client = mqtt.Client()
     client.on_connect = on_connect
