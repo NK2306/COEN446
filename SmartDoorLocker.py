@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 
 mqttc = mqtt.Client()
-mqttc.connect("localhost", 1883, 60)
+mqttc.connect("test.mosquitto.org", 1883, 60)
 
 while True:
     print("Leaving or entering? (1 for entering, 0 for leaving)")
