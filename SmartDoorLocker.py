@@ -4,12 +4,26 @@ mqttc = mqtt.Client()
 mqttc.connect("test.mosquitto.org", 1883, 60)
 
 while True:
-    print("Leaving or entering? (1 for entering, 0 for leaving)")
-    index = input()
-    print("Code entered:", index)
+    while True:
+        print("Leaving or entering? (1 for entering, 0 for leaving)")
+        index = input()
+        if index.isdigit():
+            print("Code entered:", index)
+            break
+        else:
+            print("Please type in 1 or 0")
+            continue
 
-    print("Name of person entering or leaving:")
-    name = input()
-    print("Name entered:", name)
+    while True:
+        print("Name of person entering or leaving:")
+        name = input()
+        if name.isdigit():
+            print("Name must be alphabetical")
+            continue
+        else:
+            print("Name entered:", name)
+            print("Publishing data to server:", name + ',' + index)
+            mqttc.publish("Smart/Locker", name + ',' + index, qos=0, retain=False)
+            break
 
-    mqttc.publish("Smart/Locker", name + ',' + index, qos=0, retain=False)
+
