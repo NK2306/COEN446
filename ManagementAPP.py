@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 
 mqttc = mqtt.Client()
-mqttc.connect("test.mosquitto.org", 1883, 60)
+mqttc.connect("localhost", 1883, 60)
 
 while True:
     while True:
